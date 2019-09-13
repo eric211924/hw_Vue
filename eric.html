@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- toast -->
+    <link rel="stylesheet" href="css/jquery.toast.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="ericApp">
+        最新消息 <button v-on:click='newEric()'>新增</button>
+        <ul>
+            <li v-for="abc,index in timeList"> <pre> {{abc.title}} &#9; {{abc.ymd}}  &#9;<button v-on:click="editEric(index)"
+                    class="bt1">修改</button><button>刪除</button> </pre> </li>
+        </ul>
+    </div>
+
+    <!-- 對話盒 -->
+
+    <div id="newsModal" style="border:1px solid black">
+        新增/修改
+
+        <form action="">
+            標題
+            <input type="text" placeholder="請輸入標題 byEric" v-model="title">
+            日期
+            <input type="text" placeholder="請輸入日期 byEric" v-model="ymd">
+        </form>
+        <button v-on:click="okEric()">確定</button>
+        <button v-on:click="cancel()">取消</button>
+
+
+
+    </div>
+
+
+
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.toast.js"></script>
+
+    <script>
+        $("#newsModal").hide();
+
+
+        $(function () {
+            let a111 = new Vue({
+                el: "#ericApp",
+                data: {
+                    timeList: [{
+                            ymd: "2017-05-01",
+                            title: "Item 1"
+                        },
+                        {
+                            ymd: "2017-05-01",
+                            title: "Item 2"
+                        },
+                        {
+                            ymd: "2017-05-02",
+                            title: "Item 3"
+                        },
+                        {
+                            ymd: "2017-05-03",
+                            title: "Item 4"
+                        },
+                        {
+                            ymd: "2017-05-04",
+                            title: "Item 5"
+                        }
+                    ]
+                },
+                methods: {
+                    editEric: function (e) {
+                        console.log('index=' + e);
+                        this.timeList[e].title += '$';
+                        // $("#newsModal").modal( { backdrop: "static" } );
+                        $("#newsModal").show();
+                    },
+                    newEric: function () {
+                        $("#newsModal").show();
+                    }
+                }
+            })
+
+            let a222 = new Vue({
+                el: '#newsModal',
+                data: {
+                    title: "",
+                    ymd: ""
+                },
+                methods: {
+                    cancel: function () {
+                        $("#newsModal").hide();
+
+                    },
+                    okEric: function () {
+                        console.log('1354');
+                        var objNew = {
+                            title: this.title,
+                            ymd: this.ymd
+                        }
+                        a111.timeList.push(objNew);
+
+
+
+                    }
+                }
+
+
+
+
+
+            })
+        })
+    </script>
+
+
+</body>
+
+</html>
